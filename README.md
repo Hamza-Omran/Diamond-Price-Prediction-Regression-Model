@@ -1,4 +1,4 @@
-# Diamond Price Prediction using Multiple Linear Regression
+# Diamond Price Prediction using Multiple Linear Regression - 2024
 
 ## Academic Context
 This project was developed as part of the "Linear Regression Analysis" course (2024).
