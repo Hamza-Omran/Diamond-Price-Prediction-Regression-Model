@@ -1,7 +1,12 @@
-# Diamond Price Prediction using Multiple Linear Regression - 2024
+# Diamond Price Prediction – Multiple Linear Regression (Python)
 
-## Academic Context
-This project was developed as part of the "Linear Regression Analysis" course (2024).
+An **academic implementation of Multiple Linear Regression** built **from scratch** to predict diamond prices based on physical and qualitative attributes, with a strong emphasis on **statistical rigor, preprocessing, and model validation**.
+
+**Context:** Linear Regression Analysis – University Coursework (2024)  
+**Type:** Team Project  
+**Domain:** Statistical Modeling · Regression Analysis · Data Analytics
+
+---
 
 ## Team Members
 
@@ -13,216 +18,187 @@ This project was developed as part of the "Linear Regression Analysis" course (2
 | 22010183    | Fares Salah El-Din Abdel Fattah El-Nahas |
 | 22011562    | Omar Hafez Mamoun Mohamed Hassan         |
 | 22011680    | Mohamed Mahmoud Mohamed Hassanein        |
-| 22011501    | Hamza Hussein Yousef Omran               |
+| 22011501    | **Hamza Hussein Yousef Omran**           |
 | 22010182    | Fares Ahmed Abu El-Fotouh Abdel Fadil    |
 | 20225926030 | Ahmed Hussein Hassan Dwedar              |
 | 22010124    | Tarek Mostafa Mohamed Ezz El-Din         |
 | 22010263    | Moaz Mostafa Abdelhamid Mostafa          |
 
+---
+
 ## Project Overview
 
-This project implements a multiple linear regression model from scratch to predict diamond prices based on various attributes. The analysis includes comprehensive data preprocessing, outlier handling, and model evaluation using a dataset of approximately 54,000 diamonds.
+This project develops a **multiple linear regression model from first principles** to predict **diamond prices** using a real-world dataset of approximately **54,000 observations**.
+
+Rather than relying solely on library abstractions, the project focuses on:
+- Manual regression formulation
+- Careful data preprocessing
+- Statistical assumption validation
+- Interpretability of coefficients and results
+
+The objective is to demonstrate **solid regression fundamentals**, not black-box prediction.
+
+---
 
 ## Dataset Description
 
-The dataset contains 53,940 diamonds with the following features:
+**Dataset Size:** 53,940 diamonds  
+**Target Variable:** Price (USD)
 
 ### Numerical Features
-- **carat**: Weight of the diamond
-- **depth**: Total depth percentage
-- **table**: Width of top of diamond relative to widest point
-- **x**: Length in mm
-- **y**: Width in mm
-- **z**: Depth in mm
-- **price**: Price in US dollars (target variable)
+- `carat` – Diamond weight
+- `depth` – Total depth percentage
+- `table` – Table width relative to diamond width
+- `x`, `y`, `z` – Physical dimensions (mm)
 
 ### Categorical Features
-- **cut**: Quality of the cut (Fair, Good, Very Good, Premium, Ideal)
-- **color**: Diamond color (J worst to D best)
-- **clarity**: Clarity grade (I1 worst to IF best)
+- `cut` – Fair → Ideal  
+- `color` – J (worst) → D (best)  
+- `clarity` – I1 (worst) → IF (best)
+
+---
 
 ## Methodology
 
 ### 1. Data Preprocessing
 
-#### Phase 1: Encoding Categorical Data
-- Converted categorical features (cut, color, clarity) to numerical values
-- Mapping scheme:
-  - Cut: Fair=1, Good=2, Very Good=3, Premium=4, Ideal=5
-  - Color: J=1, I=2, H=3, G=4, F=5, E=6, D=7
-  - Clarity: I1=1, SI1=2, SI2=3, VS1=4, VS2=5, VVS1=6, VVS2=7, IF=8
-- Verified no duplicates or null values in the dataset
+#### Categorical Encoding
+Ordinal encoding was applied based on domain hierarchy:
 
-#### Phase 2: Outlier Treatment
-- Identified outliers using boxplot visualization
-- Replaced lower outliers with minimum non-outlier values
-- Replaced upper outliers with maximum non-outlier values
-- Applied threshold-based capping for extreme values
+- **Cut:** Fair=1 → Ideal=5  
+- **Color:** J=1 → D=7  
+- **Clarity:** I1=1 → IF=8  
 
-### 2. Implementation Details
+All mappings preserve **semantic ordering**.
 
-Custom implementations of key regression functions:
-- Design matrix construction with intercept term
-- Beta coefficient estimation using Ordinary Least Squares (OLS)
-- Sum of Squared Errors (SSE) calculation
-- Sum of Squared Total (SST) calculation
-- ANOVA table generation
-- Adjusted R-squared computation
-- Prediction generation
+#### Outlier Treatment
+- Outliers detected via boxplots
+- Extreme values capped using min/max non-outlier thresholds
+- Prevented distortion of regression coefficients
+
+No missing values or duplicates were found.
+
+---
+
+### 2. Regression Implementation (From Scratch)
+
+Key components implemented manually:
+
+- Design matrix construction (with intercept)
+- Ordinary Least Squares (OLS) estimation
+- Prediction function
+- SSE, SST computation
+- ANOVA table construction
+- Adjusted R² calculation
+
+This ensured full transparency of the regression mechanics.
+
+---
 
 ### 3. Model Validation
 
-- Split data into training (70%) and testing (30%) sets
-- Cross-validated results with scikit-learn implementation
-- Performed feature selection analysis using SelectKBest
-- Conducted correlation analysis to check for multicollinearity
+- Train/Test split: **70% / 30%**
+- Cross-validated against **scikit-learn**
+- Feature relevance checked using **SelectKBest**
+- Correlation analysis performed to detect multicollinearity
+
+---
 
 ## Results
 
 ### Model Performance
 
-| Phase | Accuracy (Adjusted R²) |
-|-------|------------------------|
-| Before Preprocessing | 85.92% |
-| After Phase 1 (Encoding) | Improved |
-| After Phase 2 (Outlier Treatment) | 91.91% |
+| Stage | Adjusted R² |
+|------|-------------|
+| Baseline Model | 85.92% |
+| After Encoding | Improved |
+| After Outlier Treatment | **91.91%** |
 
 ### Key Findings
 
-1. **Strong Predictors**: The variables x, y, z, and carat exhibit strong correlation with diamond price
-2. **Weak Predictors**: Cut, color, clarity, table, and depth show weaker correlation with price
-3. **No Multicollinearity**: Features are independent (orthogonal) with no significant multicollinearity
-4. **Normal Residuals**: Model residuals follow approximately normal distribution, indicating good fit
-
-### Statistical Analysis
-
-- Generated comprehensive ANOVA tables for each preprocessing phase
+- **Strong predictors:** `carat`, `x`, `y`, `z`
+- **Weak predictors:** `cut`, `color`, `clarity`, `depth`, `table`
+- No significant multicollinearity detected
+- Residuals approximately normally distributed
 - F-statistic confirms overall model significance
-- Residual analysis validates model assumptions
-- Probability plots confirm normal distribution of residuals
-
-## Visualization Highlights
-
-- Correlation heatmap showing feature relationships
-- Boxplots for outlier detection before and after treatment
-- Scatter plots demonstrating feature-price relationships
-- Actual vs. predicted values scatter plot with regression line
-- Residual distribution histogram
-- Q-Q plot for normality assessment
-- Pairplot matrix for comprehensive variable analysis
-
-## Technologies Used
-
-- **Python 3.x**
-- **NumPy**: Numerical computations and matrix operations
-- **Pandas**: Data manipulation and analysis
-- **Matplotlib**: Data visualization
-- **Seaborn**: Statistical graphics
-- **scikit-learn**: Model validation and feature selection
-- **statsmodels**: Statistical analysis and model summaries
-- **SciPy**: Statistical tests
-
-## Project Structure
-
-project/
-├── diamonds.csv # Dataset
-├── GreatTeamMakeBetterDream.ipynb # Main notebook
-├── lecture (2).ipynb # Additional analysis
-├── lecture (3).ipynb # Additional analysis
-└── README.md # Project documentation
-
-
-## How to Run
-
-1. Install required dependencies:
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn statsmodels scipy
-```
-
-2. Place the diamonds.csv file in the project directory
-
-3. Open and run the Jupyter notebook:
-
-```bash
-jupyter notebook GreatTeamMakeBetterDream.ipynb
-```
-Here is your content rewritten in **clean, organized, professional Markdown**, with proper headings, spacing, and bullet formatting:
 
 ---
 
-## Model Functions
+## Statistical Analysis
 
-### **Core Functions**
-
-**`get_design_matrix(X)`**
-Adds an intercept column to the feature matrix.
-
-**`get_best_model(X, y)`**
-Computes beta coefficients using the Ordinary Least Squares (OLS) method.
-
-**`get_predictions(model, X)`**
-Generates model predictions based on the estimated coefficients.
-
-**`get_SSE(X, y, model)`**
-Calculates the **Sum of Squared Errors (SSE)**.
-
-**`get_SST(y)`**
-Computes the **Total Sum of Squares (SST)**.
-
-**`build_anova(X, SSE, SST)`**
-Constructs an ANOVA table for model evaluation.
-
-**`get_R2adj(SSE, SST, n, p)`**
-Calculates the **Adjusted R-squared** value.
+- ANOVA tables generated for each preprocessing stage
+- Residual diagnostics validated regression assumptions
+- Q–Q plots confirmed residual normality
+- Correlation heatmaps revealed feature relationships
 
 ---
 
-### **Preprocessing Functions**
+## Visualizations
 
-**`remove_outliers(df, threshold)`**
-Removes outliers using the Z-score method based on a given threshold.
+The analysis includes:
 
-**`max_non_outliers(df)`**
-Identifies maximum values within non-outlier boundaries.
+- Correlation heatmaps
+- Outlier boxplots (before & after treatment)
+- Feature vs. price scatter plots
+- Actual vs. predicted price comparison
+- Residual histograms
+- Q–Q plots
+- Pairplot matrix for exploratory analysis
 
-**`min_non_outliers(df)`**
-Identifies minimum values within non-outlier boundaries.
+These visuals support **interpretability and validation**.
+
+---
+
+## Technology Stack
+
+- **Python**
+- **NumPy** – Matrix operations
+- **Pandas** – Data handling
+- **Matplotlib / Seaborn** – Visualization
+- **scikit-learn** – Validation & feature selection
+- **statsmodels** – Statistical summaries
+- **SciPy** – Statistical testing
+
+---
+
+## Engineering Focus
+
+This project emphasizes:
+- Statistical correctness over model complexity
+- Interpretability of regression coefficients
+- Proper handling of categorical data
+- Robust outlier management
+- Validation of linear regression assumptions
+
+It is designed as a **statistics-first regression project**, not a machine learning benchmark.
 
 ---
 
 ## Conclusion
 
-Through iterative refinement of the multiple linear regression model, prediction accuracy improved from **85.92%** to **91.91%**.
+Through systematic preprocessing and rigorous statistical validation, model performance improved from **85.92% to 91.91% Adjusted R²**.
 
-The final model provides a **robust and interpretable framework** for predicting diamond prices, supported by:
+The final model provides:
+- A reliable framework for diamond price estimation
+- Clear insight into feature importance
+- Verified adherence to regression assumptions
 
-### **Key Strengths**
-
-* A reliable methodology for **accurate diamond price prediction**
-* Valuable insights into the **pricing dynamics** of the diamond market
-* **Evidence-based rankings** of important predictive features
-* Validation of essential **statistical assumptions**
-
-These results emphasize the importance of feature engineering and careful outlier management. The findings equip stakeholders in the diamond industry with data-driven tools to make informed decisions regarding pricing strategies, inventory management, and market forecasting.
+This highlights the impact of **feature engineering and data quality** on predictive performance.
 
 ---
 
 ## Future Work
 
-* Explore non-linear relationships using polynomial features
-* Investigate ensemble models (Random Forest, Gradient Boosting, etc.)
-* Apply cross-validation for more reliable evaluation
-* Analyze temporal trends in diamond pricing
-* Build an interactive visualization dashboard
+- Polynomial and interaction terms
+- Regularized regression (Ridge, Lasso)
+- Ensemble models (Random Forest, Gradient Boosting)
+- Cross-validation across multiple folds
+- Interactive dashboards for business users
 
 ---
 
-## License
+## How to Run
 
-This project was completed as part of a college course assignment for **Regression Analysis**.
-
----
-
-## Acknowledgments
-
-Special thanks to the course instructors and team members who contributed to this comprehensive analysis of diamond pricing dynamics.
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn statsmodels scipy
+jupyter notebook GreatTeamMakeBetterDream.ipynb
